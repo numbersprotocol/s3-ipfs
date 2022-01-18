@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  s3-ipfs:
+    image: s3-ipfs:latest
+    container_name: s3-ipfs
+    restart: always
+    ports:
+      - 4001:4001
+      - 5001:5001
+      - 8080:8080
+    environment:
+      AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
