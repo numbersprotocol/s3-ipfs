@@ -26,7 +26,7 @@ jobs:
         with:
           time: "30s"
       - name: Test the IPFS API server
-        run: docker run --network container:app appropriate/curl -s --retry 10 --retry-connrefused -X POST http://127.0.0.1:5001/api/v0/version
+        run: docker run --network host appropriate/curl -s --retry 10 --retry-connrefused -X POST http://127.0.0.1:5001/api/v0/version
       - name: Collect docker logs on failure
         if: failure()
         uses: jwalton/gh-docker-logs@v1
