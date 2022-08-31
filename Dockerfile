@@ -15,13 +15,18 @@ COPY . .
 RUN git clone --depth 1 --branch v0.11.0 https://github.com/ipfs/go-ipfs && \
     cd go-ipfs && \
     go get github.com/ipfs/go-ds-s3/plugin@1ad440b && \
+    cd $GOPATH/pkg/mod/github.com/ipfs/go-ds-s3@v0.8.0 && \
+    git apply /workspace/remove_path_style.diff && \
+    cd /workspace/go-ipfs && \
+    go install github.com/ipfs/go-ds-s3/plugin && \
     cp ../preload_list plugin/loader/preload_list && \
     make build && go mod tidy && make build
 
 RUN cp /workspace/go-ipfs/cmd/ipfs/ipfs /usr/local/bin/
 
-RUN go-ipfs/cmd/ipfs/ipfs init && \
-    python3 configure.py --base-dir=/workspace/.ipfs \
+# Skip ipfs init and use copied directory .ipfs
+# RUN  go-ipfs/cmd/ipfs/ipfs init && \
+RUN python3 configure.py --base-dir=/workspace/.ipfs \
         --bucket=$S3_BUCKET_NAME \
         --region=$S3_REGION \
         --region-endpoint=$S3_REGION_ENDPOINT && \

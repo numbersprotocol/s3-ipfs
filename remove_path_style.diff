@@ -1,0 +1,13 @@
+diff --git a/s3.go b/s3.go
+index cf035c8..b803d16 100644
+--- a/s3.go
++++ b/s3.go
+@@ -85,7 +85,7 @@ func NewS3Datastore(conf Config) (*S3Bucket, error) {
+        })
+
+        if conf.RegionEndpoint != "" {
+-               awsConfig.WithS3ForcePathStyle(true)
++//             awsConfig.WithS3ForcePathStyle(true)
+                awsConfig.WithEndpoint(conf.RegionEndpoint)
+        }
+
