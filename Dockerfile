@@ -15,6 +15,10 @@ COPY . .
 RUN git clone --depth 1 --branch v0.11.0 https://github.com/ipfs/go-ipfs && \
     cd go-ipfs && \
     go get github.com/ipfs/go-ds-s3/plugin@1ad440b && \
+    cd $GOPATH/pkg/mod/github.com/ipfs/go-ds-s3@v0.8.0 && \
+    git apply /workspace/remove_path_style.diff && \
+    cd /workspace/go-ipfs && \
+    go install github.com/ipfs/go-ds-s3/plugin && \
     cp ../preload_list plugin/loader/preload_list && \
     make build && go mod tidy && make build
 
@@ -25,6 +29,8 @@ RUN go-ipfs/cmd/ipfs/ipfs init && \
         --bucket=$S3_BUCKET_NAME \
         --region=$S3_REGION \
         --region-endpoint=$S3_REGION_ENDPOINT && \
+    ipfs config --bool Experimental.AcceleratedDHTClient true && \
+    ipfs config Reprovider.Strategy roots && \
     ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001 && \
     ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
 
