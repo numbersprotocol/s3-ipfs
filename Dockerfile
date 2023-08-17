@@ -24,8 +24,9 @@ RUN git clone --depth 1 --branch v0.11.0 https://github.com/ipfs/go-ipfs && \
 
 RUN cp /workspace/go-ipfs/cmd/ipfs/ipfs /usr/local/bin/
 
-RUN go-ipfs/cmd/ipfs/ipfs init && \
-    python3 configure.py --base-dir=/workspace/.ipfs \
+# Skip ipfs init and use copied directory .ipfs
+# RUN  go-ipfs/cmd/ipfs/ipfs init && \
+RUN python3 configure.py --base-dir=/workspace/.ipfs \
         --bucket=$S3_BUCKET_NAME \
         --region=$S3_REGION \
         --region-endpoint=$S3_REGION_ENDPOINT && \

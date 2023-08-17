@@ -13,7 +13,7 @@ def create_datastore_spec(bucket: str, region: str) -> Dict:
                 'bucket': bucket,
                 'mountpoint': '/blocks',
                 'region': region,
-                'rootDirectory': '/blocks',
+                'rootDirectory': f'/{bucket}/blocks',
             },
             {
                 'mountpoint': '/',
@@ -31,7 +31,7 @@ def update_config(config: Dict, bucket: str, region: str, region_endpoint: str):
             'type': 's3ds',
             'region': region,
             'bucket': bucket,
-            'rootDirectory': '/blocks',
+            'rootDirectory': f'/{bucket}/blocks',
             'regionEndpoint': region_endpoint,
             'accessKey': '',
             'secretKey': '',
